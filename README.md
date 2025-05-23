@@ -29,7 +29,7 @@ These users are preloaded for testing purposes and can be used to log in immedia
 | Admin      | `admin@example.com`      | `test`   |
 | Director 1 | `director@example.com`   | `test`   |
 | Director 2 | `director2@example.com`  | `test`   |
-| Teacher    | `teacher@example.com`    | `test`   |
+| Teacher 1  | `teacher@example.com`    | `test`   |
 | Teacher 2  | `halina@example.com`     | `test`   |
 | Student 1  | `student1@example.com`   | `test`   |
 | Student 2  | `student2@example.com`   | `test`   |
