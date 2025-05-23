@@ -115,8 +115,8 @@ These users are preloaded for testing purposes and can be used to log in immedia
 
 1. **Clone the repository:**
 ```bash
-git clone https://github.com/yourusername/student-ejournal.git
-cd student-ejournal
+git clone https://github.com/Jaroslaw-Baumgart/Student-e-Journal
+cd Student-e-Journal
 ```
 
 2. **Install dependencies:**
