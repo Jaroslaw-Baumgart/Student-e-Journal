@@ -1,236 +1,55 @@
-# 📘 Student e-Journal Web Application
-
-This is a web application for managing student grades, subjects, and school structures. It supports multiple user roles: **admin**, **director**, **teacher**, and **student**. Built with Node.js, Express.js, Sequelize ORM, and MySQL. It uses Passport.js for authentication and ACL for role-based access control.
-
----
-
-## 🎯 Key Features
-
-✅ Multi-role user system (Admin, Director, Teacher, Student)  
-✅ Admin panel for managing all users and schools  
-✅ Director panel to manage their school and assign teachers/students  
-✅ Teacher panel to manage subjects and assign grades  
-✅ Student access to view grades  
-✅ Passwords hashed securely using bcrypt  
-✅ Authentication with Passport.js  
-✅ Role-based permissions using ACL  
-✅ EJS template engine for views  
-✅ Supports multiple schools  
-✅ Full CRUD support for users, grades, and subjects  
-
----
-
-## 👤 Predefined Test Users
-
-These users are preloaded for testing purposes and can be used to log in immediately:
-
-| Role       | Email                    | Password |
-|------------|--------------------------|----------|
-| Admin      | `admin@example.com`      | `test`   |
-| Director 1 | `director@example.com`   | `test`   |
-| Director 2 | `director2@example.com`  | `test`   |
-| Teacher 1  | `teacher@example.com`    | `test`   |
-| Teacher 2  | `halina@example.com`     | `test`   |
-| Student 1  | `student1@example.com`   | `test`   |
-| Student 2  | `student2@example.com`   | `test`   |
-| Student 3  | `student3@example.com`   | `test`   |
-
-🔐 *These accounts are created on server start and stored in the database. Passwords are securely hashed using bcrypt.*
-
----
-
-## 🛠️ Technologies Used
-
-- **Node.js**
-- **Express.js**
-- **Sequelize ORM**
-- **MySQL**
-- **Passport.js**
-- **ACL (Access Control List)**
-- **bcrypt.js**
-- **EJS (Embedded JavaScript Templates)**
-
-
-## 🧱 Project Structure
-
-```
-
-├── controllers/                  # Application logic
-├── models/                       # Sequelize models
-│   ├── grade.model.js
-│   ├── school.model.js
-│   ├── subject.model.js
-│   ├── user.model.js
-│   └── schemas.js
-├── utility/                      # Helpers and DB config
-│   ├── aclauth.js
-│   ├── auth.js
-│   ├── db.js
-│   └── permissions.js
-├── helpers/
-│   └── htmlHelper.js             # View helpers
-├── views/
-│   ├── partials/                 # Shared EJS components
-│   │   ├── footer.ejs
-│   │   ├── head.ejs
-│   │   └── navbar.ejs
-│   ├── subjects/
-│   │   ├── index.ejs
-│   │   ├── student\_mysubjects.ejs
-│   │   ├── subject\_add.ejs
-│   │   ├── subject\_addgrade.ejs
-│   │   ├── subject\_addstudent.ejs
-│   │   ├── subject\_edit.ejs
-│   │   ├── subject\_grades.ejs
-│   │   ├── subject\_view\.ejs
-│   │   └── teacher\_mysubjects.ejs
-│   ├── grades/
-│   │   ├── grade\_add.ejs
-│   │   ├── grade\_edit.ejs
-│   │   ├── grade\_view\.ejs
-│   │   └── index.ejs
-│   ├── admin/
-│   │   ├── schools/
-│   │   │   └── user\_add.ejs
-│   │   ├── user\_edit.ejs
-│   │   ├── user\_view\.ejs
-│   │   ├── users\_add.ejs
-│   │   ├── users\_edit.ejs
-│   │   └── users.ejs
-│   ├── dashboard.ejs
-│   ├── index.ejs
-│   ├── login.ejs
-│   └── register.ejs
-├── public/
-│   └── style.css                 # Static styles
-├── screenshots/                 # UI screenshots
-├── node\_modules/               # Installed dependencies
-├── package.json                # Project metadata and scripts
-├── package-lock.json
-└── server.js                   # Main application entry point
+# Student e-Journal
 
-```
+A school journal for managing schools, users, subjects and grades. The current version uses Express, EJS, Sequelize and MySQL.
 
-## 🚀 How to Run Locally
+The project is planned for a refactor to Angular and TypeScript. The new version is not yet implemented.
 
-1. **Clone the repository:**
-```bash
-git clone https://github.com/Jaroslaw-Baumgart/Student-e-Journal
-cd Student-e-Journal
-```
+## Refactor plan
 
-2. **Install dependencies:**
+The refactor will focus on two roles:
 
-```bash
-npm install
-```
+- **Students** will be able to view their subjects, grades and weekly timetable.
+- **Teachers** will be able to view their classes and students, and manage grades within their assigned subjects.
 
-3. **Set up the MySQL database:**
+Both roles will have a dashboard. The first release is scoped to one school, one class per student, grades from 1 to 6 and a read-only weekly timetable.
 
-   Start XAMPP and enable the MySQL and Apache servers.
+The planned stack is Angular and TypeScript for the frontend, Node.js, Express and TypeScript for the API, and Sequelize with MySQL for data storage. The refactor will add database migrations, server-side authorization and tests for key scenarios.
 
-4. **Run the application:**
+## Original application
 
-```bash
-node server.js
-```
+The existing application renders EJS views on the server and uses Passport and sessions for login. Its code includes role-based views for users, schools, subjects and grades. Screenshots in [screenshots/](screenshots/) show the original interface.
 
-5. **Open your browser and visit:**
+![Original dashboard](screenshots/Dashboard.jpg)
 
-```
-http://localhost:3010
-```
+### Running the original version
 
----
+> **Database warning:** Starting the original application runs `sequelize.sync({ force: true })`, which drops and recreates its tables. It also inserts demo data automatically. Use a separate, empty local database and do not point it at data you need to keep.
 
-## 📸 Screenshots
+These setup instructions have not been recently verified.
 
-### 📂 Core Interface
+1. Install Node.js and run a local MySQL server.
+2. Create an empty database named `schoolacl`. The configuration in [utility/db.js](utility/db.js) connects to `localhost` as `root` with an empty password. Adjust it for your local setup if necessary, and do not commit credentials.
+3. From the project root, install dependencies and start the server:
 
-#### 🏠 Home Page
-Landing page with login/register options.
-![home](screenshots/Home.jpg)
+   ```bash
+   npm install
+   npm start
+   ```
 
-#### 🔐 Login Page
-Secure login form for all user roles. Authenticates users using Passport.js.
-![login](screenshots/Login.jpg)
+4. Open [http://localhost:3010](http://localhost:3010).
 
-#### 📝 Register Page
-User registration form.
-![register](screenshots/Register.jpg)
+The original startup creates demo accounts, including `teacher@example.com` and `student1@example.com`, both with password `test`. These credentials are for local demonstration only.
 
-#### Dashboard
-After successful login.
-![dashboard.jpg](screenshots/Dashboard.jpg)
+The current `npm test` script is a placeholder; it does not run a test suite.
 
-#### 🛑 Access Forbidden
-Displayed when a user tries to access a page without the required permissions. Role-based access control prevents unauthorized actions.
-![access_forbidden](screenshots/access_forbidden.jpg)
+## Project layout
 
-### 🛠️ Admin Panel
+- `server.js` — Express routes and server startup.
+- `controllers/` and `models/` — application logic and Sequelize models.
+- `utility/` — database, authentication and permissions code.
+- `views/` and `public/` — EJS templates and static assets.
+- `screenshots/` — screenshots of the original application.
 
-#### Admin – Schools List
-![admin_list_school](screenshots/Admin_schools_list.jpg)
+## Author
 
-#### Admin – Edit Schools
-![admin_edit_school](screenshots/Admin_edit_school.jpg)
-
-#### Admin – View Schools
-![admin_view_school](screenshots/Admin_view_school.jpg)
-
-#### Admin – View Subject
-![view_subject](screenshots/View_subject.jpg)
-
-### 🎓 Director Panel
-
-#### Director - Options
-![director_view_school](screenshots/director_view_school.jpg)
-
-#### Director – View Teacher
-![director_view_teacher](screenshots/director_view_teacher.jpg)
-
-### 👩‍🏫 Teacher Panel
-
-#### Teacher - Options
-![view_teacher_subject](screenshots/View_teacher_subject.jpg)
-
-#### Teacher - Add Grade
-![add_grade](screenshots/Add_grade_to_subject_and_student.jpg)
-
-#### Teacher - Add Student to subject 
-![add_student](screenshots/Add_student_to_subject.jpg)
-
-#### Teacher - View Grade
-![view_grade](screenshots/View_grade.jpg)
-
-#### Teacher - View Grade For Subject
-![view_grade_for_subject](screenshots/View_grades_for_subject.jpg)
-
-### 👨‍🎓 Student Panel
-
-#### Student - View Grade And Subject
-![view_student_subject](screenshots/View_student_subjects.jpg)
-
-
-
-
-## 👨‍💻 Author
-
-Created by **Jarosław Baumgart**.
-
-## 📜 License
-
-This project is available under the **MIT License**.
-
-## 📬 Contact
-
-If you have any questions, feel free to reach out:
-
-🔗 **GitHub:** [Jaroslaw-Baumgart](https://github.com/Jaroslaw-Baumgart)  
-📧 **Email:** jaroslawbaumgart@gmail.com
-
-## ✨ Future Plans
-One day, I might rebuild this project using React — I promise. 😉
-
-
-
+[Jarosław Baumgart](https://github.com/Jaroslaw-Baumgart)
